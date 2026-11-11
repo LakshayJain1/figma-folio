@@ -7,7 +7,7 @@ interface Props {
   onSelect: () => void;
 }
 
-export default function CaseFrame({ case_: c, onOpen, onSelect }: Props) {
+export default function CaseFrame({ case_: c, onOpen }: Props) {
   return (
     <div className="select-none cursor-pointer">
       {/* cover */}

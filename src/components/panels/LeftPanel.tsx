@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { FrameCorners, FileText, Square } from '@phosphor-icons/react';
+import { FrameCorners, FileText } from '@phosphor-icons/react';
 import { FRAME_META } from '@/data/cases';
 
 interface Props {
