@@ -8,6 +8,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-displ
 export const metadata: Metadata = {
   title: 'Lakshay Jain: Product Builder',
   description: 'Design → Code → Shipped. Full-stack AI engineer and product builder based in Jaipur, India.',
+  icons: { icon: '/favicon.png', shortcut: '/favicon.png' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

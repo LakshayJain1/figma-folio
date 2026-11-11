@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Plus, Trash, X } from '@phosphor-icons/react';
+import Image from 'next/image';
 import { FRAME_META } from '@/data/cases';
 
 interface Props {
@@ -68,7 +69,9 @@ export default function RightPanel({ selected, notes, onAddNote, onDeleteNote, o
         {tab === 'design' && (
           <div>
             <div className="p-4 border-b border-[var(--panel-border)] flex flex-col items-center gap-2">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center text-white font-display font-bold text-xl">LJ</div>
+              <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-violet-500/30 flex-shrink-0">
+                <Image src="/images/avatar.jpg" alt="Lakshay Jain" width={56} height={56} className="object-cover w-full h-full" unoptimized />
+              </div>
               <p className="font-semibold text-gray-900 dark:text-gray-100">Lakshay Jain</p>
               <p className="text-gray-400 text-[10px]">Product Builder · Jaipur, India</p>
               <div className="flex items-center gap-1.5 text-[10px] text-green-500">
