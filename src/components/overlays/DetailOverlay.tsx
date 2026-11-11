@@ -4,14 +4,14 @@ import type { Case } from '@/data/cases';
 
 export default function DetailOverlay({ case_: c, onClose }: { case_: Case; onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-6" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-6" onClick={onClose}>
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
       <div
-        className="relative bg-white dark:bg-[#1e1e1e] rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        className="relative bg-white dark:bg-[#1e1e1e] shadow-2xl w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl"
         onClick={e => e.stopPropagation()}
       >
         {/* cover */}
-        <div className="relative w-full h-56 bg-gray-900 overflow-hidden rounded-t-2xl">
+        <div className="relative w-full h-44 sm:h-56 bg-gray-900 overflow-hidden rounded-t-2xl">
           <Image src={c.img} alt={c.title} fill className="object-cover" unoptimized />
           <button
             onClick={onClose}
@@ -19,7 +19,7 @@ export default function DetailOverlay({ case_: c, onClose }: { case_: Case; onCl
           >✕</button>
         </div>
 
-        <div className="p-8">
+        <div className="p-5 sm:p-8">
           {/* tags */}
           <div className="flex flex-wrap gap-1.5 mb-4">
             {c.tags.map(t => (

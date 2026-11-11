@@ -68,15 +68,46 @@ export function useCanvas(canPan: () => boolean = () => true) {
     };
     const onMouseUp = () => { isDragging.current = false; wrap.style.cursor = ''; };
 
+    // touch support
+    let lastTouches: Touch[] = [];
+    const onTouchStart = (e: TouchEvent) => {
+      lastTouches = Array.from(e.touches);
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      const touches = Array.from(e.touches);
+      if (touches.length === 1 && canPanRef.current()) {
+        const dx = touches[0].clientX - (lastTouches[0]?.clientX ?? touches[0].clientX);
+        const dy = touches[0].clientY - (lastTouches[0]?.clientY ?? touches[0].clientY);
+        setTransform(t => ({ ...t, tx: t.tx + dx, ty: t.ty + dy }));
+      } else if (touches.length === 2 && lastTouches.length === 2) {
+        const prev = Math.hypot(lastTouches[1].clientX - lastTouches[0].clientX, lastTouches[1].clientY - lastTouches[0].clientY);
+        const next = Math.hypot(touches[1].clientX - touches[0].clientX, touches[1].clientY - touches[0].clientY);
+        if (prev === 0) return;
+        const rect = wrap.getBoundingClientRect();
+        const mx = (touches[0].clientX + touches[1].clientX) / 2 - rect.left;
+        const my = (touches[0].clientY + touches[1].clientY) / 2 - rect.top;
+        applyZoomAt(mx, my, next / prev);
+      }
+      lastTouches = touches;
+    };
+    const onTouchEnd = (e: TouchEvent) => { lastTouches = Array.from(e.touches); };
+
     wrap.addEventListener('wheel', onWheel, { passive: false });
     wrap.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
+    wrap.addEventListener('touchstart', onTouchStart, { passive: true });
+    wrap.addEventListener('touchmove', onTouchMove, { passive: false });
+    wrap.addEventListener('touchend', onTouchEnd, { passive: true });
     return () => {
       wrap.removeEventListener('wheel', onWheel);
       wrap.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
+      wrap.removeEventListener('touchstart', onTouchStart);
+      wrap.removeEventListener('touchmove', onTouchMove);
+      wrap.removeEventListener('touchend', onTouchEnd);
     };
   }, [applyZoomAt]);
 

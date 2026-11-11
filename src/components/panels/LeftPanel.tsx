@@ -1,19 +1,33 @@
 'use client';
 import { useState } from 'react';
-import { FrameCorners, FileText } from '@phosphor-icons/react';
+import { FrameCorners, FileText, X } from '@phosphor-icons/react';
 import { FRAME_META } from '@/data/cases';
 
 interface Props {
   selected: string | null;
   onSelect: (id: string) => void;
+  open?: boolean;
+  onClose?: () => void;
 }
 
-export default function LeftPanel({ selected, onSelect }: Props) {
+export default function LeftPanel({ selected, onSelect, open, onClose }: Props) {
   const [tab, setTab] = useState<'layers' | 'pages'>('layers');
 
+  const handleSelect = (id: string) => { onSelect(id); onClose?.(); };
+
   return (
-    <div className="w-56 flex-shrink-0 bg-[var(--panel-bg)] border-r border-[var(--panel-border)] flex flex-col text-xs select-none">
-      <div className="flex border-b border-[var(--panel-border)]">
+    <>
+      {/* mobile backdrop */}
+      {open && <div className="fixed inset-0 bg-black/40 z-30 lg:hidden" onClick={onClose} />}
+      <div className={[
+        'bg-[var(--panel-bg)] border-r border-[var(--panel-border)] flex flex-col text-xs select-none',
+        // desktop: always visible in flow
+        'lg:w-56 lg:flex-shrink-0 lg:static lg:translate-x-0 lg:z-auto lg:shadow-none',
+        // mobile/tablet: fixed side drawer
+        'max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:bottom-0 max-lg:w-72 max-lg:z-40 max-lg:transition-transform max-lg:duration-300 max-lg:shadow-2xl',
+        open ? 'max-lg:translate-x-0' : 'max-lg:-translate-x-full',
+      ].join(' ')}>
+      <div className="flex items-center border-b border-[var(--panel-border)]">
         {(['layers', 'pages'] as const).map(t => (
           <button
             key={t}
@@ -25,6 +39,11 @@ export default function LeftPanel({ selected, onSelect }: Props) {
             }`}
           >{t}</button>
         ))}
+        {onClose && (
+          <button onClick={onClose} className="lg:hidden px-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+            <X size={14} />
+          </button>
+        )}
       </div>
 
       {tab === 'layers' && (
@@ -32,7 +51,7 @@ export default function LeftPanel({ selected, onSelect }: Props) {
           {Object.entries(FRAME_META).map(([id, meta]) => (
             <button
               key={id}
-              onClick={() => onSelect(id)}
+              onClick={() => handleSelect(id)}
               className={`w-full flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors text-left ${
                 selected === id ? 'bg-violet-50 dark:bg-violet-950/30 text-violet-700 dark:text-violet-300' : 'text-gray-600 dark:text-gray-400'
               }`}
@@ -53,5 +72,6 @@ export default function LeftPanel({ selected, onSelect }: Props) {
         </div>
       )}
     </div>
+    </>
   );
 }

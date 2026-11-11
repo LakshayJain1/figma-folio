@@ -18,6 +18,8 @@ export default function Home() {
   const [cmdOpen, setCmdOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [zoom, setZoom] = useState(100);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
   const { notes, addNote, deleteNote } = useNotes();
 
   // sync zoom from canvas
@@ -87,10 +89,18 @@ export default function Home() {
         onFit={fit}
         darkMode={darkMode}
         onToggleDark={() => setDarkMode(d => !d)}
+        onShowLeft={() => setShowLeft(v => !v)}
+        onShowRight={() => setShowRight(v => !v)}
+        onShowCmd={() => setCmdOpen(o => !o)}
       />
 
       <div className="flex flex-1 overflow-hidden">
-        <LeftPanel selected={selected} onSelect={handleLayerSelect} />
+        <LeftPanel
+          selected={selected}
+          onSelect={handleLayerSelect}
+          open={showLeft}
+          onClose={() => setShowLeft(false)}
+        />
 
         <Canvas
           tool={tool}
@@ -106,6 +116,8 @@ export default function Home() {
           notes={notes}
           onAddNote={addNote}
           onDeleteNote={deleteNote}
+          open={showRight}
+          onClose={() => setShowRight(false)}
         />
       </div>
 

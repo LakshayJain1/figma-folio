@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Plus, Trash } from '@phosphor-icons/react';
+import { Plus, Trash, X } from '@phosphor-icons/react';
 import { FRAME_META } from '@/data/cases';
 
 interface Props {
@@ -8,6 +8,8 @@ interface Props {
   notes: Record<string, string[]>;
   onAddNote: (frameId: string, text: string) => void;
   onDeleteNote: (frameId: string, index: number) => void;
+  open?: boolean;
+  onClose?: () => void;
 }
 
 const EXP = [
@@ -19,7 +21,7 @@ const EXP = [
 
 const SKILLS_QUICK = ['LangChain', 'RAG', 'Next.js', 'TypeScript', 'Python', 'Neo4j', 'Figma', 'n8n'];
 
-export default function RightPanel({ selected, notes, onAddNote, onDeleteNote }: Props) {
+export default function RightPanel({ selected, notes, onAddNote, onDeleteNote, open, onClose }: Props) {
   const [tab, setTab] = useState<'design' | 'inspect'>('design');
   const [addingNote, setAddingNote] = useState(false);
   const [noteText, setNoteText] = useState('');
@@ -35,8 +37,20 @@ export default function RightPanel({ selected, notes, onAddNote, onDeleteNote }:
   };
 
   return (
-    <div className="w-56 flex-shrink-0 bg-[var(--panel-bg)] border-l border-[var(--panel-border)] flex flex-col text-xs select-none">
-      <div className="flex border-b border-[var(--panel-border)]">
+    <>
+      {open && <div className="fixed inset-0 bg-black/40 z-30 lg:hidden" onClick={onClose} />}
+      <div className={[
+        'bg-[var(--panel-bg)] border-l border-[var(--panel-border)] flex flex-col text-xs select-none',
+        'lg:w-56 lg:flex-shrink-0 lg:static lg:translate-x-0 lg:z-auto lg:shadow-none',
+        'max-lg:fixed max-lg:top-0 max-lg:right-0 max-lg:bottom-0 max-lg:w-72 max-lg:z-40 max-lg:transition-transform max-lg:duration-300 max-lg:shadow-2xl',
+        open ? 'max-lg:translate-x-0' : 'max-lg:translate-x-full',
+      ].join(' ')}>
+      <div className="flex items-center border-b border-[var(--panel-border)]">
+        {onClose && (
+          <button onClick={onClose} className="lg:hidden px-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+            <X size={14} />
+          </button>
+        )}
         {(['design', 'inspect'] as const).map(t => (
           <button
             key={t}
@@ -156,5 +170,6 @@ export default function RightPanel({ selected, notes, onAddNote, onDeleteNote }:
         )}
       </div>
     </div>
+    </>
   );
 }

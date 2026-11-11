@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Cursor, Hand, ChatCircle, PencilSimple, Sun, Moon } from '@phosphor-icons/react';
+import { Cursor, Hand, ChatCircle, PencilSimple, Sun, Moon, SquaresFour, SlidersHorizontal, Terminal } from '@phosphor-icons/react';
 
 type Tool = 'move' | 'hand' | 'comment' | 'pencil';
 
@@ -13,6 +13,9 @@ interface Props {
   onFit: () => void;
   darkMode: boolean;
   onToggleDark: () => void;
+  onShowLeft?: () => void;
+  onShowRight?: () => void;
+  onShowCmd?: () => void;
 }
 
 const TOOLS: { id: Tool; key: string; Icon: React.ElementType; title: string }[] = [
@@ -22,7 +25,7 @@ const TOOLS: { id: Tool; key: string; Icon: React.ElementType; title: string }[]
   { id: 'pencil',  key: 'P', Icon: PencilSimple,       title: 'Pencil (P) · click to clear' },
 ];
 
-export default function Toolbar({ tool, onTool, zoom, onZoomIn, onZoomOut, onFit, darkMode, onToggleDark }: Props) {
+export default function Toolbar({ tool, onTool, zoom, onZoomIn, onZoomOut, onFit, darkMode, onToggleDark, onShowLeft, onShowRight, onShowCmd }: Props) {
   const [copied, setCopied] = useState(false);
 
   const handleShare = () => {
@@ -35,6 +38,13 @@ export default function Toolbar({ tool, onTool, zoom, onZoomIn, onZoomOut, onFit
 
   return (
     <div className="h-10 bg-[#2c2c2c] flex items-center px-3 gap-1 flex-shrink-0 z-30">
+      {/* mobile: layers toggle */}
+      {onShowLeft && (
+        <button onClick={onShowLeft} title="Layers" className="lg:hidden w-7 h-7 rounded flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white">
+          <SquaresFour size={15} />
+        </button>
+      )}
+
       {/* logo */}
       <div className="flex items-center gap-1.5 mr-3">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -46,7 +56,7 @@ export default function Toolbar({ tool, onTool, zoom, onZoomIn, onZoomOut, onFit
         <span className="text-[#d4d4d4] text-xs font-semibold tracking-tight">folio</span>
       </div>
 
-      <div className="w-px h-5 bg-white/10 mx-1" />
+      <div className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
 
       {/* tools */}
       {TOOLS.map(({ id, Icon, title }) => (
@@ -64,14 +74,14 @@ export default function Toolbar({ tool, onTool, zoom, onZoomIn, onZoomOut, onFit
         </button>
       ))}
 
-      <div className="w-px h-5 bg-white/10 mx-1" />
+      <div className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
 
-      <button onClick={onFit} title="Fit (Shift+1)" className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-white/10 transition-colors">
+      <button onClick={onFit} title="Fit (Shift+1)" className="hidden sm:block text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-white/10 transition-colors">
         Fit
       </button>
 
       {/* zoom */}
-      <div className="flex items-center gap-0.5 ml-auto">
+      <div className="hidden sm:flex items-center gap-0.5 ml-auto">
         <button onClick={onZoomOut} className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 rounded transition-colors text-sm">−</button>
         <button onClick={onFit} className="text-xs text-gray-300 hover:text-white px-2 py-1 rounded hover:bg-white/10 transition-colors min-w-[3.5rem] text-center">
           {zoom}%
@@ -79,7 +89,7 @@ export default function Toolbar({ tool, onTool, zoom, onZoomIn, onZoomOut, onFit
         <button onClick={onZoomIn} className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 rounded transition-colors text-sm">+</button>
       </div>
 
-      <div className="w-px h-5 bg-white/10 mx-1" />
+      <div className="ml-auto sm:ml-0 w-px h-5 bg-white/10 mx-1" />
 
       {/* theme */}
       <button onClick={onToggleDark} title="Toggle theme" className="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 rounded transition-colors">
@@ -95,6 +105,18 @@ export default function Toolbar({ tool, onTool, zoom, onZoomIn, onZoomOut, onFit
       >
         {copied ? 'Copied!' : 'Share'}
       </button>
+
+      {/* mobile: inspect + terminal toggles */}
+      {onShowCmd && (
+        <button onClick={onShowCmd} title="Terminal" className="lg:hidden w-7 h-7 rounded flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white ml-1">
+          <Terminal size={15} />
+        </button>
+      )}
+      {onShowRight && (
+        <button onClick={onShowRight} title="Inspect" className="lg:hidden w-7 h-7 rounded flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white">
+          <SlidersHorizontal size={15} />
+        </button>
+      )}
     </div>
   );
 }
