@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    --canvas-bg: #e8e8e8;
+    --panel-bg: #ffffff;
+    --panel-border: #e2e2e2;
+    --toolbar-bg: #2c2c2c;
+    --toolbar-fg: #d4d4d4;
+    color-scheme: light;
+  }
+
+  .dark {
+    --canvas-bg: #1a1a1a;
+    --panel-bg: #232323;
+    --panel-border: #333333;
+    --toolbar-bg: #1a1a1a;
+    --toolbar-fg: #d4d4d4;
+    color-scheme: dark;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  * { box-sizing: border-box; }
+}
+
+/* dot-grid canvas background */
+.canvas-bg {
+  background-color: var(--canvas-bg);
+  background-image: radial-gradient(circle, #aaaaaa 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .canvas-bg {
+  background-color: var(--canvas-bg);
+  background-image: radial-gradient(circle, #3a3a3a 1px, transparent 1px);
+}
+
+/* frame shadow */
+.canvas-frame {
+  background: var(--panel-bg);
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 4px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+  cursor: default;
+}
+
+.canvas-frame:hover {
+  box-shadow: 0 1px 4px rgba(0,0,0,0.16), 0 4px 32px rgba(0,0,0,0.14);
+}
+
+.canvas-frame.selected {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
+
+/* scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(100,100,100,0.3); border-radius: 3px; }

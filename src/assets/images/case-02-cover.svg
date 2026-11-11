@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg2)"/>
+
+  <!-- Orbital rings -->
+  <ellipse cx="600" cy="310" rx="260" ry="260" fill="none" stroke="#22d3ee" stroke-width="1" opacity="0.12"/>
+  <ellipse cx="600" cy="310" rx="180" ry="180" fill="none" stroke="#22d3ee" stroke-width="1" opacity="0.18"/>
+  <ellipse cx="600" cy="310" rx="100" ry="100" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.25"/>
+
+  <!-- Agent nodes around orbit -->
+  <!-- Engineering -->
+  <circle cx="600" cy="50" r="30" fill="#164e63" stroke="#22d3ee" stroke-width="2"/>
+  <text x="600" y="55" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#67e8f9">ENG</text>
+  <line x1="600" y1="80" x2="600" y2="210" stroke="#22d3ee" stroke-width="1" opacity="0.3"/>
+
+  <!-- Research -->
+  <circle cx="860" cy="180" r="28" fill="#164e63" stroke="#22d3ee" stroke-width="2"/>
+  <text x="860" y="185" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#67e8f9">RES</text>
+  <line x1="835" y1="197" x2="720" y2="260" stroke="#22d3ee" stroke-width="1" opacity="0.3"/>
+
+  <!-- Finance -->
+  <circle cx="800" cy="490" r="28" fill="#164e63" stroke="#22d3ee" stroke-width="2"/>
+  <text x="800" y="495" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#67e8f9">FIN</text>
+  <line x1="775" y1="472" x2="690" y2="400" stroke="#22d3ee" stroke-width="1" opacity="0.3"/>
+
+  <!-- Operations -->
+  <circle cx="400" cy="490" r="28" fill="#164e63" stroke="#22d3ee" stroke-width="2"/>
+  <text x="400" y="495" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#67e8f9">OPS</text>
+  <line x1="425" y1="472" x2="510" y2="400" stroke="#22d3ee" stroke-width="1" opacity="0.3"/>
+
+  <!-- Sales -->
+  <circle cx="340" cy="180" r="28" fill="#164e63" stroke="#22d3ee" stroke-width="2"/>
+  <text x="340" y="185" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#67e8f9">SAL</text>
+  <line x1="365" y1="197" x2="480" y2="260" stroke="#22d3ee" stroke-width="1" opacity="0.3"/>
+
+  <!-- Center PM node -->
+  <circle cx="600" cy="310" r="58" fill="#083344" stroke="#22d3ee" stroke-width="2.5"/>
+  <text x="600" y="305" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#67e8f9">PM</text>
+  <text x="600" y="323" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#a5f3fc">AGENT</text>
+
+  <!-- QA badge -->
+  <circle cx="720" cy="195" r="22" fill="#134e4a" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="720" y="200" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#5eead4">QA</text>
+
+  <!-- Labels -->
+  <rect x="80" y="490" width="460" height="1" fill="#22d3ee" opacity="0.2"/>
+  <text x="80" y="535" font-family="system-ui, sans-serif" font-size="32" font-weight="700" fill="#e0f2fe" letter-spacing="-0.5">Agent Corp</text>
+  <text x="80" y="568" font-family="system-ui, sans-serif" font-size="16" fill="#22d3ee" letter-spacing="1">MULTI-AGENT AI ORCHESTRATION</text>
+
+  <rect x="80" y="430" width="130" height="28" rx="14" fill="#083344" stroke="#22d3ee" stroke-width="1"/>
+  <text x="145" y="449" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#67e8f9">Agentic AI</text>
+  <rect x="222" y="430" width="130" height="28" rx="14" fill="#083344" stroke="#22d3ee" stroke-width="1"/>
+  <text x="287" y="449" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#67e8f9">LLM Orchestration</text>
+</svg>
