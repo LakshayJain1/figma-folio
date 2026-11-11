@@ -22,13 +22,11 @@ export default function Home() {
   const [showRight, setShowRight] = useState(false);
   const { notes, addNote, deleteNote } = useNotes();
 
-  // sync zoom from canvas
+  // sync zoom from canvas via custom event (fired by Canvas on pct change)
   useEffect(() => {
-    const id = setInterval(() => {
-      const pct = (window as unknown as Record<string, unknown>).__canvasPct as number | undefined;
-      if (pct !== undefined) setZoom(pct);
-    }, 200);
-    return () => clearInterval(id);
+    const onZoom = (e: Event) => setZoom((e as CustomEvent<number>).detail);
+    window.addEventListener('canvas:zoom', onZoom);
+    return () => window.removeEventListener('canvas:zoom', onZoom);
   }, []);
 
   // dark mode

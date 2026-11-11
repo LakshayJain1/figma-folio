@@ -25,7 +25,7 @@ interface Comment { id: number; cx: number; cy: number; frameId: string; text: s
 export default function Canvas({ tool, selected, onSelect, onOpenCase, notes, onAddNote }: Props) {
   const toolRef = useRef(tool);
   toolRef.current = tool;
-  const { wrapRef, transform, zoomBy, fitToScreen, pct } = useCanvas(
+  const { wrapRef, innerRef, getTransform, zoomBy, fitToScreen, pct } = useCanvas(
     useCallback(() => toolRef.current === 'move' || toolRef.current === 'hand', [])
   );
   const svgRef = useRef<SVGSVGElement>(null);
@@ -38,11 +38,11 @@ export default function Canvas({ tool, selected, onSelect, onOpenCase, notes, on
   const noteRef = useRef<HTMLInputElement>(null);
   const nextId = useRef(1);
 
-  // expose zoom and fit to parent via window (simple approach)
+  // expose zoom/fit to parent toolbar via window; fire event so page.tsx avoids polling
   useEffect(() => {
     (window as unknown as Record<string, unknown>).__canvasZoomBy = zoomBy;
     (window as unknown as Record<string, unknown>).__canvasFit = fitToScreen;
-    (window as unknown as Record<string, unknown>).__canvasPct = pct;
+    window.dispatchEvent(new CustomEvent('canvas:zoom', { detail: pct }));
   }, [zoomBy, fitToScreen, pct]);
 
   useEffect(() => {
@@ -66,11 +66,12 @@ export default function Canvas({ tool, selected, onSelect, onOpenCase, notes, on
     const wrap = wrapRef.current;
     if (!wrap) return { x: 0, y: 0 };
     const rect = wrap.getBoundingClientRect();
+    const { tx, ty, scale } = getTransform();
     return {
-      x: (clientX - rect.left - transform.tx) / transform.scale,
-      y: (clientY - rect.top - transform.ty) / transform.scale,
+      x: (clientX - rect.left - tx) / scale,
+      y: (clientY - rect.top - ty) / scale,
     };
-  }, [wrapRef, transform]);
+  }, [wrapRef, getTransform]);
 
   const hitFrame = useCallback((cx: number, cy: number): string | null => {
     for (const [id, m] of Object.entries(FRAME_META)) {
@@ -126,8 +127,6 @@ export default function Canvas({ tool, selected, onSelect, onOpenCase, notes, on
   const toSvgPath = (pts: { x: number; y: number }[]) =>
     pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ');
 
-  const { tx, ty, scale } = transform;
-
   return (
     <div
       ref={wrapRef}
@@ -137,10 +136,11 @@ export default function Canvas({ tool, selected, onSelect, onOpenCase, notes, on
       onMouseMove={handleCanvasMouseMove}
       onMouseUp={handleCanvasMouseUp}
     >
-      {/* canvas transform wrapper */}
+      {/* canvas transform wrapper — transform written directly by useCanvas, bypassing React */}
       <div
+        ref={innerRef}
         className="absolute top-0 left-0 origin-top-left"
-        style={{ transform: `translate(${tx}px, ${ty}px) scale(${scale})` }}
+        style={{ willChange: 'transform' }}
       >
         {/* pencil drawing SVG */}
         <svg
@@ -149,10 +149,10 @@ export default function Canvas({ tool, selected, onSelect, onOpenCase, notes, on
           style={{ width: 2200, height: 2200 }}
         >
           {paths.map((p, i) => (
-            <path key={i} d={toSvgPath(p.points)} stroke={p.color} strokeWidth={2 / scale} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <path key={i} d={toSvgPath(p.points)} stroke={p.color} strokeWidth={2 / getTransform().scale} fill="none" strokeLinecap="round" strokeLinejoin="round" />
           ))}
           {currentPath.length > 1 && (
-            <path d={toSvgPath(currentPath)} stroke="#a78bfa" strokeWidth={2 / scale} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <path d={toSvgPath(currentPath)} stroke="#a78bfa" strokeWidth={2 / getTransform().scale} fill="none" strokeLinecap="round" strokeLinejoin="round" />
           )}
         </svg>
 
