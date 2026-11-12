@@ -136,8 +136,8 @@ export const FRAME_META: Record<string, { w: number; h: number; x: number; y: nu
   'case-04': { w: 500, h: 580, x: 1400, y: 740,  name: 'Case 04: Inventory App' },
   'case-05': { w: 500, h: 580, x: 1120, y: 1380, name: 'Case 05: Brand + Web' },
   skills:    { w: 360, h: 440, x: 80,   y: 740,  name: 'Skills' },
-  voice:     { w: 300, h: 320, x: 460,  y: 740,  name: 'Voice Navigator' },
-  matcher:   { w: 380, h: 440, x: 780,  y: 740,  name: 'Need Matcher' },
+  voice:     { w: 360, h: 320, x: 460,  y: 740,  name: 'Voice Navigator' },
+  matcher:   { w: 360, h: 460, x: 460,  y: 1090, name: 'Need Matcher' },
   certs:     { w: 360, h: 360, x: 80,   y: 1380, name: 'Certifications' },
   contact:   { w: 320, h: 280, x: 500,  y: 1380, name: 'Contact' },
 };
