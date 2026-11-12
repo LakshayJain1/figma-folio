@@ -7,6 +7,8 @@ import CaseFrame from './frames/CaseFrame';
 import SkillsFrame from './frames/SkillsFrame';
 import CertsFrame from './frames/CertsFrame';
 import ContactFrame from './frames/ContactFrame';
+import VoiceFrame from './frames/VoiceFrame';
+import MatcherFrame from './frames/MatcherFrame';
 
 type Tool = 'move' | 'hand' | 'comment' | 'pencil';
 
@@ -199,6 +201,8 @@ export default function Canvas({ tool, selected, onSelect, onOpenCase, notes, on
               />
             )}
             {id === 'skills' && <SkillsFrame onSelect={() => onSelect(id)} />}
+            {id === 'voice' && <VoiceFrame onSelect={() => onSelect(id)} />}
+            {id === 'matcher' && <MatcherFrame onSelect={() => onSelect(id)} />}
             {id === 'certs' && <CertsFrame onSelect={() => onSelect(id)} />}
             {id === 'contact' && <ContactFrame onSelect={() => onSelect(id)} />}
 

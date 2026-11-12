@@ -1,6 +1,16 @@
 'use client';
 import Image from 'next/image';
 import type { Case } from '@/data/cases';
+import AgentCorpDemo from '@/components/demos/AgentCorpDemo';
+import PoliceAIDemo from '@/components/demos/PoliceAIDemo';
+import IMSDemo from '@/components/demos/IMSDemo';
+
+function CaseDemo({ demoKey }: { demoKey: NonNullable<Case['demoKey']> }) {
+  if (demoKey === 'agentcorp') return <AgentCorpDemo />;
+  if (demoKey === 'police-ai') return <PoliceAIDemo />;
+  if (demoKey === 'ims') return <IMSDemo />;
+  return null;
+}
 
 export default function DetailOverlay({ case_: c, onClose }: { case_: Case; onClose: () => void }) {
   return (
@@ -11,7 +21,7 @@ export default function DetailOverlay({ case_: c, onClose }: { case_: Case; onCl
         onClick={e => e.stopPropagation()}
       >
         {/* cover */}
-        <div className="relative w-full h-44 sm:h-56 bg-gray-900 overflow-hidden rounded-t-2xl">
+        <div className="relative w-full h-44 sm:h-56 bg-gray-900 overflow-hidden rounded-t-2xl flex-shrink-0">
           <Image src={c.img} alt={c.title} fill className="object-cover" unoptimized />
           <button
             onClick={onClose}
@@ -61,10 +71,32 @@ export default function DetailOverlay({ case_: c, onClose }: { case_: Case; onCl
           <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300 mb-6">{c.outcome}</p>
 
           {c.link && (
-            <a href={c.link} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-violet-600 text-white text-sm font-semibold hover:opacity-90 transition-opacity">
-              View on GitHub ↗
-            </a>
+            <div className="flex flex-wrap gap-3 mb-8">
+              <a href={c.link} target="_blank" rel="noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-violet-600 text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+                View Live ↗
+              </a>
+              {c.demoKey === 'police-ai' && (
+                <a href="https://app.aicasebrief.com" target="_blank" rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm font-semibold hover:border-violet-400 hover:text-violet-500 transition-colors">
+                  Open App ↗
+                </a>
+              )}
+            </div>
+          )}
+
+          {/* inline demo — below all case content */}
+          {c.demoKey && (
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <p className="text-[10px] font-bold tracking-widest uppercase text-gray-400">Live Demo</p>
+                <span className="flex items-center gap-1 text-[9px] text-green-500">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block" />
+                  interactive
+                </span>
+              </div>
+              <CaseDemo demoKey={c.demoKey} />
+            </div>
           )}
         </div>
       </div>

@@ -46,7 +46,7 @@ export function useCanvas(canPan: () => boolean = () => true) {
     const wrap = wrapRef.current;
     if (!wrap) return;
     const { width, height } = wrap.getBoundingClientRect();
-    const contentW = 2000, contentH = 2050;
+    const contentW = 2200, contentH = 2200;
     const s = Math.min(width / contentW, height / contentH) * 0.88;
     const scale = Math.round(s * 10) / 10;
     commit({ scale, tx: (width - contentW * scale) / 2, ty: (height - contentH * scale) / 2 });

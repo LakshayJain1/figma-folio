@@ -11,6 +11,7 @@ export interface Case {
   outcome: string;
   metrics: { num: string; label: string }[];
   link?: string;
+  demoKey?: 'agentcorp' | 'police-ai' | 'ims';
 }
 
 export const CASES: Case[] = [
@@ -55,7 +56,8 @@ export const CASES: Case[] = [
       { num: '5', label: 'Specialist AI teams' },
       { num: '8/10', label: 'QA confidence gate' },
     ],
-    link: 'https://github.com/LakshayJain1/AgentCorp',
+    link: 'https://agent-corp.vercel.app',
+    demoKey: 'agentcorp',
   },
   {
     id: 'case-03',
@@ -63,7 +65,7 @@ export const CASES: Case[] = [
     img: '/images/case-03-cover.svg',
     tags: ['AI Agents', 'n8n', 'Webhooks', 'Encryption', 'Next.js', 'Report Generation'],
     accentTags: ['AI Agents', 'n8n'],
-    title: 'Police AI Report Assistant',
+    title: 'AI Case Brief',
     meta: 'Tectome · US Law Enforcement Client · 2025–2026 · Full-Stack AI Engineer',
     problem: 'US police officers spent hours drafting reports manually. The department needed a secure, AI-driven system to generate legally compliant case law reports, criminal reports, incident reports, gang intel briefs, court testimony preps, and more from officer-provided inputs.',
     bullets: [
@@ -77,6 +79,8 @@ export const CASES: Case[] = [
       { num: '<2 min', label: 'Draft report generation' },
       { num: 'E2E', label: 'Encrypted data pipeline' },
     ],
+    link: 'https://aicasebrief.com',
+    demoKey: 'police-ai',
   },
   {
     id: 'case-04',
@@ -98,6 +102,8 @@ export const CASES: Case[] = [
       { num: 'Real-time', label: 'Stock tracking' },
       { num: 'RBAC', label: 'Multi-role access' },
     ],
+    link: 'https://inven-tracker.vercel.app',
+    demoKey: 'ims',
   },
   {
     id: 'case-05',
@@ -126,10 +132,12 @@ export const FRAME_META: Record<string, { w: number; h: number; x: number; y: nu
   hero:      { w: 680, h: 420, x: 80,   y: 100,  name: 'Hero' },
   'case-01': { w: 500, h: 580, x: 840,  y: 100,  name: 'Case 01: Canopy AI' },
   'case-02': { w: 500, h: 580, x: 1400, y: 100,  name: 'Case 02: Agent Corp' },
-  'case-03': { w: 500, h: 580, x: 840,  y: 740,  name: 'Case 03: AI Chat' },
+  'case-03': { w: 500, h: 580, x: 840,  y: 740,  name: 'Case 03: AI Case Brief' },
   'case-04': { w: 500, h: 580, x: 1400, y: 740,  name: 'Case 04: Inventory App' },
   'case-05': { w: 500, h: 580, x: 1120, y: 1380, name: 'Case 05: Brand + Web' },
   skills:    { w: 360, h: 440, x: 80,   y: 740,  name: 'Skills' },
+  voice:     { w: 300, h: 320, x: 460,  y: 740,  name: 'Voice Navigator' },
+  matcher:   { w: 380, h: 440, x: 780,  y: 740,  name: 'Need Matcher' },
   certs:     { w: 360, h: 360, x: 80,   y: 1380, name: 'Certifications' },
   contact:   { w: 320, h: 280, x: 500,  y: 1380, name: 'Contact' },
 };
